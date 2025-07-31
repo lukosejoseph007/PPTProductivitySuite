@@ -416,3 +416,18 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+
+# Build outputs
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userprefs
+
+# VSTO temporary files
+*.vshost.*
+*.publish.xml
