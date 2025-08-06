@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+	<ribbon>
+		<tabs>
+			<tab id="tabProductivity" label="Productivity Tools" keytip="P">
+				<!-- Ultra-Simple Format Group - NO BOXES -->
+				<group id="grpFormat" label="Format">
+					<button id="btnAlignLeft" imageMso="AlignLeft" size="large" onAction="OnAlignClick" label="Align Left"/>
+					<button id="btnAlignCenter" imageMso="AlignCenter" size="large" onAction="OnAlignClick" label="Align Center"/>
+					<button id="btnSameWidth" imageMso="ColumnWidth" size="normal" onAction="OnSameSizeClick" showLabel="false"/>
+					<button id="btnSameHeight" imageMso="RowHeight" size="normal" onAction="OnSameSizeClick" showLabel="false"/>
+					<button id="btnSameSize" imageMso="SizeToFit" size="normal" onAction="OnSameSizeClick" showLabel="false"/>
+					<button id="btnCopyPosition" imageMso="Copy" size="normal" onAction="OnPositionClick" showLabel="false"/>
+					<button id="btnPastePosition" imageMso="Paste" size="normal" onAction="OnPositionClick" showLabel="false"/>
+				</group>
+
+				<!-- Keep working groups -->
+				<group id="grpPaste" label="Paste">
+					<button id="btnPastePlainText" imageMso="MessageFormatPlainText" size="large" onAction="OnPastePlainText" showLabel="false"/>
+					<button id="btnPasteDestinationTheme" imageMso="PasteDestinationFormatting" size="large" onAction="OnPasteDestinationTheme" showLabel="false"/>
+					<button id="btnPasteSourceFormatting" imageMso="PasteSourceFormatting" size="large" onAction="OnPasteSourceFormatting" showLabel="false"/>
+					<button id="btnPasteImage" imageMso="PasteAsPicture" size="large" onAction="OnPasteImage" showLabel="false"/>
+				</group>
+
+				<group id="grpLibrary" label="Library">
+					<button id="btnSaveSlide" imageMso="SaveSelectionToCoverPageGallery" size="large" onAction="OnSaveSlideClick" showLabel="false"/>
+					<button id="btnShowLibrary" imageMso="SaveSentItemOtherFolder" size="large" onAction="OnShowLibraryClick" showLabel="false"/>
+				</group>
+
+				<!-- Mermaid Diagram -->
+				<group id="grpDiagram" label="Diagrams">
+					<button id="btnInsertMermaid"
+							label="Insert Mermaid"
+							size="large"
+							imageMso="DiagramInsert"
+							onAction="OnInsertMermaidClick"
+							screentip="Insert Mermaid Diagram"
+							supertip="Render Mermaid.js code into a PowerPoint shape"/>
+				</group>
+				
+			</tab>
+		</tabs>
+	</ribbon>
+</customUI>

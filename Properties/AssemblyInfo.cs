@@ -17,11 +17,13 @@ using System.Security;
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
+
+
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("40433600-2627-4140-94f9-7c69e3c56674")]
+[assembly: Guid("A69FE362-8140-4345-82FB-A4CFFE0ABCF1")]
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(true)]
 
 // Version information for an assembly consists of the following four values:
 //
