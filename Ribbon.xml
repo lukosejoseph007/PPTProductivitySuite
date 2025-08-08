@@ -7,24 +7,24 @@
 				<group id="grpFormat" label="Format">
 					<button id="btnAlignLeft" imageMso="AlignLeft" size="large" onAction="OnAlignClick" label="Align Left"/>
 					<button id="btnAlignCenter" imageMso="AlignCenter" size="large" onAction="OnAlignClick" label="Align Center"/>
-					<button id="btnSameWidth" imageMso="ColumnWidth" size="normal" onAction="OnSameSizeClick" showLabel="false"/>
-					<button id="btnSameHeight" imageMso="RowHeight" size="normal" onAction="OnSameSizeClick" showLabel="false"/>
-					<button id="btnSameSize" imageMso="SizeToFit" size="normal" onAction="OnSameSizeClick" showLabel="false"/>
-					<button id="btnCopyPosition" imageMso="Copy" size="normal" onAction="OnPositionClick" showLabel="false"/>
-					<button id="btnPastePosition" imageMso="Paste" size="normal" onAction="OnPositionClick" showLabel="false"/>
+					<button id="btnSameWidth" imageMso="ColumnWidth" size="normal" onAction="OnSameSizeClick" screentip="Same Width" supertip="Adjust width of other shapes to the shape of the first selection"/>
+					<button id="btnSameHeight" imageMso="RowHeight" size="normal" onAction="OnSameSizeClick" screentip="Same Height" supertip="Adjust height of other shapes to the shape of the first selection"/>
+					<button id="btnSameSize" imageMso="SizeToFit" size="normal" onAction="OnSameSizeClick" screentip="Same Size" supertip="Adjust size of other shapes to the shape of the first selection"/>
+					<button id="btnCopyPosition" imageMso="Copy" size="normal" onAction="OnPositionClick" screentip="Copy Position" supertip="Copy position of other shapes to the shape position of the first selection"/>
+					<button id="btnPastePosition" imageMso="Paste" size="normal" onAction="OnPositionClick" screentip="Paste Position" supertip="Paste position of other shapes to the shape position of the first selection"/>
 				</group>
 
 				<!-- Keep working groups -->
 				<group id="grpPaste" label="Paste">
-					<button id="btnPastePlainText" imageMso="MessageFormatPlainText" size="large" onAction="OnPastePlainText" showLabel="false"/>
-					<button id="btnPasteDestinationTheme" imageMso="PasteDestinationFormatting" size="large" onAction="OnPasteDestinationTheme" showLabel="false"/>
-					<button id="btnPasteSourceFormatting" imageMso="PasteSourceFormatting" size="large" onAction="OnPasteSourceFormatting" showLabel="false"/>
-					<button id="btnPasteImage" imageMso="PasteAsPicture" size="large" onAction="OnPasteImage" showLabel="false"/>
+					<button id="btnPastePlainText" imageMso="MessageFormatPlainText" size="large" onAction="OnPastePlainText" label="Plain Text"/>
+					<button id="btnPasteDestinationTheme" imageMso="PasteDestinationFormatting" size="large" onAction="OnPasteDestinationTheme" label="Destination Style"/>
+					<button id="btnPasteSourceFormatting" imageMso="PasteSourceFormatting" size="large" onAction="OnPasteSourceFormatting" label="Source Style"/>
+					<button id="btnPasteImage" imageMso="PasteAsPicture" size="large" onAction="OnPasteImage" label="Paste Image"/>
 				</group>
 
 				<group id="grpLibrary" label="Library">
-					<button id="btnSaveSlide" imageMso="SaveSelectionToCoverPageGallery" size="large" onAction="OnSaveSlideClick" showLabel="false"/>
-					<button id="btnShowLibrary" imageMso="SaveSentItemOtherFolder" size="large" onAction="OnShowLibraryClick" showLabel="false"/>
+					<button id="btnSaveSlide" imageMso="SaveSelectionToCoverPageGallery" size="large" onAction="OnSaveSlideClick" label="Save Slide"/>
+					<button id="btnShowLibrary" imageMso="SaveSentItemOtherFolder" size="large" onAction="OnShowLibraryClick" label="Show Library"/>
 				</group>
 
 				<!-- Mermaid Diagram -->
@@ -32,7 +32,7 @@
 					<button id="btnInsertMermaid"
 							label="Insert Mermaid"
 							size="large"
-							imageMso="DiagramInsert"
+							imageMso="ChartInsert"
 							onAction="OnInsertMermaidClick"
 							screentip="Insert Mermaid Diagram"
 							supertip="Render Mermaid.js code into a PowerPoint shape"/>
