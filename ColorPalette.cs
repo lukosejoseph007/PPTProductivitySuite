@@ -10,16 +10,129 @@ namespace PPTProductivitySuite
     public class ColorPalette
     {
         public string Name { get; set; }
+        
+        // FIXED: Make Color properties XML-serializable by using backing fields and conversion properties
+        [XmlIgnore]
         public Color PrimaryColor { get; set; }
+        [XmlIgnore]
         public Color SecondaryColor { get; set; }
+        [XmlIgnore]
         public Color TertiaryColor { get; set; }
+        [XmlIgnore]
         public Color QuaternaryColor { get; set; }
+        [XmlIgnore]
         public Color PrimaryTextColor { get; set; }
+        [XmlIgnore]
         public Color SecondaryTextColor { get; set; }
+        [XmlIgnore]
         public Color BackgroundColor { get; set; }
+        [XmlIgnore]
         public Color BorderColor { get; set; }
+        [XmlIgnore]
         public Color LineColor { get; set; }
+        [XmlIgnore]
         public Color AccentColor { get; set; }
+
+        // FIXED: XML-serializable color properties (ARGB values) with backward compatibility
+        [XmlElement("PrimaryColor")]
+        public int PrimaryColorArgb
+        {
+            get { return PrimaryColor.ToArgb(); }
+            set {
+                try { PrimaryColor = Color.FromArgb(value); }
+                catch { PrimaryColor = Color.FromArgb(68, 114, 196); } // Default fallback
+            }
+        }
+
+        [XmlElement("SecondaryColor")]
+        public int SecondaryColorArgb
+        {
+            get { return SecondaryColor.ToArgb(); }
+            set {
+                try { SecondaryColor = Color.FromArgb(value); }
+                catch { SecondaryColor = Color.FromArgb(237, 125, 49); }
+            }
+        }
+
+        [XmlElement("TertiaryColor")]
+        public int TertiaryColorArgb
+        {
+            get { return TertiaryColor.ToArgb(); }
+            set {
+                try { TertiaryColor = Color.FromArgb(value); }
+                catch { TertiaryColor = Color.FromArgb(165, 165, 165); }
+            }
+        }
+
+        [XmlElement("QuaternaryColor")]
+        public int QuaternaryColorArgb
+        {
+            get { return QuaternaryColor.ToArgb(); }
+            set {
+                try { QuaternaryColor = Color.FromArgb(value); }
+                catch { QuaternaryColor = Color.FromArgb(255, 192, 0); }
+            }
+        }
+
+        [XmlElement("PrimaryTextColor")]
+        public int PrimaryTextColorArgb
+        {
+            get { return PrimaryTextColor.ToArgb(); }
+            set {
+                try { PrimaryTextColor = Color.FromArgb(value); }
+                catch { PrimaryTextColor = Color.Black; }
+            }
+        }
+
+        [XmlElement("SecondaryTextColor")]
+        public int SecondaryTextColorArgb
+        {
+            get { return SecondaryTextColor.ToArgb(); }
+            set {
+                try { SecondaryTextColor = Color.FromArgb(value); }
+                catch { SecondaryTextColor = Color.FromArgb(68, 68, 68); }
+            }
+        }
+
+        [XmlElement("BackgroundColor")]
+        public int BackgroundColorArgb
+        {
+            get { return BackgroundColor.ToArgb(); }
+            set {
+                try { BackgroundColor = Color.FromArgb(value); }
+                catch { BackgroundColor = Color.White; }
+            }
+        }
+
+        [XmlElement("BorderColor")]
+        public int BorderColorArgb
+        {
+            get { return BorderColor.ToArgb(); }
+            set {
+                try { BorderColor = Color.FromArgb(value); }
+                catch { BorderColor = Color.FromArgb(68, 114, 196); }
+            }
+        }
+
+        [XmlElement("LineColor")]
+        public int LineColorArgb
+        {
+            get { return LineColor.ToArgb(); }
+            set {
+                try { LineColor = Color.FromArgb(value); }
+                catch { LineColor = Color.Black; }
+            }
+        }
+
+        [XmlElement("AccentColor")]
+        public int AccentColorArgb
+        {
+            get { return AccentColor.ToArgb(); }
+            set {
+                try { AccentColor = Color.FromArgb(value); }
+                catch { AccentColor = Color.FromArgb(91, 155, 213); }
+            }
+        }
 
         public ColorPalette()
         {

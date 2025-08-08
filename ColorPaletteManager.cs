@@ -73,12 +73,46 @@ namespace PPTProductivitySuite
                     {
                         serializer.Serialize(writer, _lastCustomPalette);
                     }
+
+                    // FIXED: Also save as a global "Last Custom" preset that appears in all PowerPoint sessions
+                    SaveGlobalCustomPalette(palette);
                 }
             }
             catch (Exception ex)
             {
                 // Don't show error to user for this non-critical operation
                 System.Diagnostics.Debug.WriteLine($"Failed to save last custom palette: {ex.Message}");
+            }
+        }
+
+        // FIXED: New method to save custom palette globally across all PowerPoint sessions
+        private static void SaveGlobalCustomPalette(ColorPalette palette)
+        {
+            try
+            {
+                if (palette != null)
+                {
+                    var globalCustom = palette.Clone();
+                    globalCustom.Name = "Last Custom Colors";
+
+                    // Remove any existing "Last Custom Colors" preset
+                    _userPresets.RemoveAll(p => p.Name.Equals("Last Custom Colors", StringComparison.OrdinalIgnoreCase));
+
+                    // Add the new custom palette at the beginning of the list
+                    _userPresets.Insert(0, globalCustom);
+
+                    // Keep only the most recent 10 presets (including the custom one)
+                    if (_userPresets.Count > 10)
+                    {
+                        _userPresets.RemoveRange(10, _userPresets.Count - 10);
+                    }
+
+                    SaveUserPresets();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to save global custom palette: {ex.Message}");
             }
         }
 
@@ -213,9 +247,29 @@ namespace PPTProductivitySuite
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load user presets: {ex.Message}", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // FIXED: Handle corrupted XML files by backing up and recreating
+                System.Diagnostics.Debug.WriteLine($"Failed to load user presets: {ex.Message}");
+                
+                try
+                {
+                    // Backup the corrupted file
+                    if (File.Exists(PresetsFilePath))
+                    {
+                        var backupPath = PresetsFilePath + ".backup." + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                        File.Copy(PresetsFilePath, backupPath);
+                        File.Delete(PresetsFilePath);
+                    }
+                }
+                catch
+                {
+                    // Ignore backup errors
+                }
+                
                 _userPresets = new List<ColorPalette>();
+                
+                // Don't show error to user on startup - just log it
+                // MessageBox.Show($"User presets were corrupted and have been reset. A backup was created.", "Presets Reset",
+                //     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -234,8 +288,22 @@ namespace PPTProductivitySuite
             }
             catch (Exception ex)
             {
-                // Non-critical error, just log it
+                // FIXED: Handle corrupted last palette file
                 System.Diagnostics.Debug.WriteLine($"Failed to load last custom palette: {ex.Message}");
+                
+                try
+                {
+                    // Delete corrupted file
+                    if (File.Exists(LastUsedPalettePath))
+                    {
+                        File.Delete(LastUsedPalettePath);
+                    }
+                }
+                catch
+                {
+                    // Ignore deletion errors
+                }
+                
                 _lastCustomPalette = null;
             }
         }

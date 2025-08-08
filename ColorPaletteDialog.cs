@@ -20,6 +20,7 @@ namespace PPTProductivitySuite
         private Button btnOK;
         private Button btnCancel;
         private Button btnSavePreset;
+        private Button btnUpdatePreset;
         private Button btnDeletePreset;
         private ColorDialog colorDialog;
 
@@ -68,8 +69,8 @@ namespace PPTProductivitySuite
         private void InitializeComponents()
         {
             Text = "Select Color Palette";
-            Size = new Size(700, 600); // Increased size for better layout
-            MinimumSize = new Size(650, 550);
+            Size = new Size(900, 750); // FIXED: Much larger size for better layout
+            MinimumSize = new Size(850, 700); // FIXED: Larger minimum size
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.Sizable;
             MaximizeBox = true;
@@ -87,54 +88,56 @@ namespace PPTProductivitySuite
                 Dock = DockStyle.Fill,
                 ColumnCount = 1,
                 RowCount = 4,
-                Padding = new Padding(15)
+                Padding = new Padding(20) // FIXED: More padding around main panel
             };
-            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 90)); // Increased
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 150)); // FIXED: More space for text wrapping
             mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 55));
-            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 70)); // Increased
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 100)); // FIXED: More space for taller save buttons
+            mainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 90)); // FIXED: More space for bottom buttons
 
             // Preset selection panel - FIXED button sizing
             var presetPanel = new Panel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(5)
+                Padding = new Padding(10) // FIXED: More padding in preset panel
             };
 
             var lblPreset = new Label
             {
                 Text = "Color Preset:",
-                Location = new Point(5, 12),
-                Size = new Size(100, 25), // Slightly wider
+                Location = new Point(10, 15), // FIXED: More margin from edge
+                Size = new Size(120, 30),
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
 
             cmbPresets = new ComboBox
             {
-                Location = new Point(110, 10),
-                Size = new Size(200, 28), // Wider to show longer names
+                Location = new Point(140, 12), // FIXED: More space from label
+                Size = new Size(280, 32), // FIXED: Even wider
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
 
-            // FIXED: Better button sizing for longer text
+            // FIXED: Better button positioning with more spacing
             btnDeletePreset = new Button
             {
                 Text = "Delete Preset",
-                Location = new Point(320, 8),
-                Size = new Size(100, 32), // Wider for full text
+                Location = new Point(430, 10), // FIXED: More space from combobox
+                Size = new Size(200, 35),
                 UseVisualStyleBackColor = true,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F),
-                AutoSize = false // Prevent auto-sizing issues
+                AutoSize = false
             };
 
             chkUseCustomColors = new CheckBox
             {
                 Text = "Use custom colors (allows editing)",
-                Location = new Point(5, 50),
-                Size = new Size(220, 25), // Wider for full text
-                Checked = isCustomPalette, // FIXED: Start with correct state
-                Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
+                Location = new Point(10, 60),
+                Size = new Size(400, 40), // FIXED: Much wider and taller for text wrapping
+                Checked = isCustomPalette,
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F),
+                AutoSize = false, // Keep fixed size but allow text wrapping
+                UseCompatibleTextRendering = true
             };
 
             presetPanel.Controls.AddRange(new Control[] { lblPreset, cmbPresets, btnDeletePreset, chkUseCustomColors });
@@ -145,8 +148,8 @@ namespace PPTProductivitySuite
                 Dock = DockStyle.Fill,
                 ColumnCount = 5,
                 RowCount = 4,
-                Padding = new Padding(10),
-                Enabled = chkUseCustomColors.Checked // FIXED: Start with correct enabled state
+                Padding = new Padding(15), // FIXED: More padding around color grid
+                Enabled = chkUseCustomColors.Checked
             };
 
             // Set column and row styles for better distribution
@@ -170,16 +173,16 @@ namespace PPTProductivitySuite
                     TextAlign = ContentAlignment.MiddleCenter,
                     Dock = DockStyle.Fill,
                     Font = new Font(SystemFonts.DefaultFont.FontFamily, 8F),
-                    Margin = new Padding(2)
+                    Margin = new Padding(5) // FIXED: More margin around labels
                 };
 
                 colorButtons[i] = new Button
                 {
                     Dock = DockStyle.Fill,
                     FlatStyle = FlatStyle.Flat,
-                    MinimumSize = new Size(90, 55), // Larger minimum size
+                    MinimumSize = new Size(110, 65),
                     Tag = i,
-                    Margin = new Padding(2)
+                    Margin = new Padding(5) // FIXED: More margin around color buttons
                 };
                 colorButtons[i].Click += ColorButton_Click;
 
@@ -194,32 +197,52 @@ namespace PPTProductivitySuite
             var savePanel = new Panel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(5)
+                Padding = new Padding(15) // FIXED: More padding in save panel
             };
             btnSavePreset = new Button
             {
                 Text = "Save as New Preset...",
-                Location = new Point(5, 15),
-                Size = new Size(180, 35), // Larger for better text fit
+                Location = new Point(15, 20),
+                Size = new Size(200, 50), // FIXED: Taller to prevent text wrapping
                 UseVisualStyleBackColor = true,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F),
-                Enabled = chkUseCustomColors.Checked // FIXED: Start with correct enabled state
+                Enabled = chkUseCustomColors.Checked,
+                AutoSize = false,
+                UseCompatibleTextRendering = true
             };
-            savePanel.Controls.Add(btnSavePreset);
+
+            // FIXED: Add Update Preset button with proper spacing
+            var btnUpdatePreset = new Button
+            {
+                Text = "Update Selected Preset",
+                Location = new Point(230, 20),
+                Size = new Size(200, 50), // FIXED: Taller to prevent text wrapping
+                UseVisualStyleBackColor = true,
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F),
+                Enabled = false,
+                AutoSize = false,
+                UseCompatibleTextRendering = true
+            };
+            btnUpdatePreset.Click += BtnUpdatePreset_Click;
+
+            savePanel.Controls.AddRange(new Control[] { btnSavePreset, btnUpdatePreset });
+
+            // Store reference for enabling/disabling
+            this.btnUpdatePreset = btnUpdatePreset;
 
             // Bottom button panel - FIXED button sizing
             var buttonPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.RightToLeft,
-                Padding = new Padding(5, 20, 5, 5)
+                Padding = new Padding(15, 25, 15, 15) // FIXED: More padding around buttons
             };
 
             btnCancel = new Button
             {
                 Text = "Cancel",
                 DialogResult = DialogResult.Cancel,
-                Size = new Size(100, 40), // Larger buttons
+                Size = new Size(120, 45), // FIXED: Larger buttons
                 UseVisualStyleBackColor = true,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
@@ -228,7 +251,7 @@ namespace PPTProductivitySuite
             {
                 Text = "OK",
                 DialogResult = DialogResult.OK,
-                Size = new Size(100, 40), // Larger buttons
+                Size = new Size(120, 45), // FIXED: Larger buttons
                 UseVisualStyleBackColor = true,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
@@ -276,13 +299,18 @@ namespace PPTProductivitySuite
                 else
                 {
                     // If current palette doesn't match any preset, it's custom
-                    cmbPresets.SelectedIndex = -1; // No selection for custom
+                    // But don't clear the selection immediately - let user choose
+                    if (cmbPresets.Items.Count > 0)
+                    {
+                        cmbPresets.SelectedIndex = 0; // Select first preset as default
+                    }
                     isCustomPalette = true;
                     chkUseCustomColors.Checked = true;
                 }
             }
 
             UpdateDeleteButtonState();
+            UpdateUpdateButtonState();
         }
 
         private void UpdateColorDisplay()
@@ -330,10 +358,21 @@ namespace PPTProductivitySuite
                 button.ForeColor = GetContrastColor(colorDialog.Color);
                 UpdateCurrentPaletteFromButtons();
 
-                // FIXED: Mark as custom when colors are modified
-                isCustomPalette = true;
-                cmbPresets.SelectedIndex = -1; // Clear preset selection
+                // FIXED: Mark as custom when colors are modified but don't clear selection immediately
+                // This allows users to update existing presets
+                if (cmbPresets.SelectedIndex == -1)
+                {
+                    isCustomPalette = true;
+                }
+
+                // FIXED: Automatically save custom colors globally for persistence across PowerPoint sessions
+                if (isCustomPalette || cmbPresets.SelectedIndex == -1)
+                {
+                    ColorPaletteManager.SaveLastCustomPalette(currentPalette);
+                }
+
                 UpdateDeleteButtonState();
+                UpdateUpdateButtonState();
             }
         }
 
@@ -369,6 +408,7 @@ namespace PPTProductivitySuite
                     isCustomPalette = false;
                     UpdateColorDisplay();
                     UpdateDeleteButtonState();
+                    UpdateUpdateButtonState();
                 }
             }
         }
@@ -377,11 +417,22 @@ namespace PPTProductivitySuite
         {
             colorPanel.Enabled = chkUseCustomColors.Checked;
             btnSavePreset.Enabled = chkUseCustomColors.Checked;
+            UpdateUpdateButtonState(); // FIXED: Update the Update button state too
 
-            // FIXED: When enabling custom colors, mark as custom if no preset selected
+            // FIXED: Don't clear preset selection when enabling custom colors
+            // Just mark as custom if no preset is selected
             if (chkUseCustomColors.Checked && cmbPresets.SelectedIndex == -1)
             {
                 isCustomPalette = true;
+            }
+            // FIXED: When disabling custom colors, ensure we're not in custom mode
+            else if (!chkUseCustomColors.Checked && isCustomPalette)
+            {
+                // If we were in custom mode, select the first preset
+                if (cmbPresets.Items.Count > 0)
+                {
+                    cmbPresets.SelectedIndex = 0;
+                }
             }
         }
 
@@ -390,6 +441,21 @@ namespace PPTProductivitySuite
             var builtInPresets = ColorPalette.GetBuiltInPresets().Keys;
             var selectedPreset = cmbPresets.SelectedItem?.ToString();
             btnDeletePreset.Enabled = selectedPreset != null && !builtInPresets.Contains(selectedPreset);
+        }
+
+        // FIXED: New method to control Update button state
+        private void UpdateUpdateButtonState()
+        {
+            var builtInPresets = ColorPalette.GetBuiltInPresets().Keys;
+            var selectedPreset = cmbPresets.SelectedItem?.ToString();
+            
+            // Enable update button if:
+            // 1. Custom colors is checked
+            // 2. A preset is selected
+            // 3. The selected preset is not a built-in preset
+            btnUpdatePreset.Enabled = chkUseCustomColors.Checked &&
+                                     !string.IsNullOrEmpty(selectedPreset) &&
+                                     !builtInPresets.Contains(selectedPreset);
         }
 
         private void BtnOK_Click(object sender, EventArgs e)
@@ -455,6 +521,45 @@ namespace PPTProductivitySuite
             }
         }
 
+        // FIXED: New method to update existing presets
+        private void BtnUpdatePreset_Click(object sender, EventArgs e)
+        {
+            var selectedPreset = cmbPresets.SelectedItem?.ToString();
+            if (selectedPreset == null)
+            {
+                MessageBox.Show("Please select a preset to update.", "No Preset Selected",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var builtInPresets = ColorPalette.GetBuiltInPresets().Keys;
+            if (builtInPresets.Contains(selectedPreset))
+            {
+                MessageBox.Show("Built-in presets cannot be updated.", "Cannot Update",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show($"Are you sure you want to update the preset '{selectedPreset}' with the current colors?",
+                "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                var updatedPreset = currentPalette.Clone();
+                updatedPreset.Name = selectedPreset;
+
+                if (ColorPaletteManager.SaveUserPreset(updatedPreset))
+                {
+                    MessageBox.Show($"Preset '{selectedPreset}' updated successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Refresh the display to show updated colors
+                    LoadPresets();
+                    cmbPresets.SelectedItem = selectedPreset;
+                }
+            }
+        }
+
 
 
         private void BtnDeletePreset_Click(object sender, EventArgs e)
@@ -494,7 +599,7 @@ namespace PPTProductivitySuite
         private void InitializeComponents()
         {
             Text = "Save Preset";
-            Size = new Size(380, 150); // Larger for better layout
+            Size = new Size(420, 250); // FIXED: Larger for better layout and spacing
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -504,25 +609,25 @@ namespace PPTProductivitySuite
             var lblName = new Label
             {
                 Text = "Preset Name:",
-                Location = new Point(15, 25),
-                Size = new Size(100, 25),
+                Location = new Point(20, 30), // FIXED: More margin from edge
+                Size = new Size(120, 20),
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
 
             txtName = new TextBox
             {
-                Location = new Point(15, 50),
-                Size = new Size(335, 25), // Wider text box
+                Location = new Point(20, 55), // FIXED: More vertical spacing
+                Size = new Size(370, 28), // FIXED: Wider text box with more margin
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
 
-            // FIXED: Better button positioning and sizing
+            // FIXED: Better button positioning with more spacing
             btnCancel = new Button
             {
                 Text = "Cancel",
                 DialogResult = DialogResult.Cancel,
-                Location = new Point(275, 85),
-                Size = new Size(80, 35), // Larger buttons
+                Location = new Point(310, 110), // FIXED: More vertical spacing
+                Size = new Size(80, 35),
                 UseVisualStyleBackColor = true,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };
@@ -531,8 +636,8 @@ namespace PPTProductivitySuite
             {
                 Text = "OK",
                 DialogResult = DialogResult.OK,
-                Location = new Point(185, 85),
-                Size = new Size(80, 35), // Larger buttons
+                Location = new Point(220, 110), // FIXED: More spacing between buttons
+                Size = new Size(80, 35),
                 UseVisualStyleBackColor = true,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, 9F)
             };

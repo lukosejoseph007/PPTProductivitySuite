@@ -325,9 +325,10 @@
   <PropertyGroup>
     <ManifestKeyFile>PPTProductivitySuite_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestTimestampUrl>http://timestamp.digicert.com</ManifestTimestampUrl>
-  </PropertyGroup>
+<PropertyGroup>
+    <ManifestTimestampUrl Condition="'$(Configuration)' == 'Release'">https://timestamp.digicert.com</ManifestTimestampUrl>
+    <ManifestTimestampUrl Condition="'$(Configuration)' == 'Debug'">http://timestamp.digicert.com</ManifestTimestampUrl>
+</PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
